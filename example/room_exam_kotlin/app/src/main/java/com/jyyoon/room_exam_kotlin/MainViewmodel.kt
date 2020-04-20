@@ -16,7 +16,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     ).build()
 
     var todos: LiveData<List<Todo>>
-    var newTodo: String? = null
+    var newTodo: String = ""
 
     init {
         todos = getAll()
@@ -26,9 +26,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         return db.todoDao().getAll()
     }
 
-    fun insert(todo: Todo) {
+    fun insert(todo: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.todoDao().insert(todo)
+            db.todoDao().insert(Todo(todo))
         }
     }
 }
